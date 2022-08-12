@@ -36,8 +36,12 @@ orderForm.submit(event => {
  */
 function getOrderData() {
     let ingredients = [];
+    let beverages = [];
     $.each($("input[name='ingredients']:checked"), function (el) {
         ingredients.push($(this).val());
+    });
+    $.each($("input[name='beverages']:checked"), function (el) {
+        beverages.push($(this).val());
     });
 
     return {
@@ -46,7 +50,8 @@ function getOrderData() {
         client_address: $("input[name='address']").val(),
         client_phone: $("input[name='phone']").val(),
         size_id: $("input[name='size']:checked").val(),
-        ingredients
+        ingredients,
+        beverages
     };
 }
 
@@ -102,6 +107,15 @@ function createBeverageTemplate(beverage) {
 function createSizeTemplate(size) {
     let template = $("#sizes-template")[0].innerHTML;
     return Mustache.render(template, size);
+}
+
+function changeBeverageSectionVisibility(id, enable) {
+    let element = document.getElementById(id)
+    if (enable) {
+        element.style.display = 'block';
+    } else {
+        element.style.display = 'none';
+    }
 }
 
 function loadInformation() {
